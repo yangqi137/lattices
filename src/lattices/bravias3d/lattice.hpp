@@ -1,5 +1,5 @@
-#ifndef LATTICES_BRAVIAS_LATTICE_HPP
-#define LATTICES_BRAVIAS_LATTICE_HPP
+#ifndef LATTICES_BRAVIAS3D_LATTICE_HPP
+#define LATTICES_BRAVIAS3D_LATTICE_HPP
 
 namespace lattices {
   namespace bravias3d {
@@ -35,13 +35,16 @@ namespace lattices {
 
       static Vertex vertex(Vid vid, const Lattice& l) {
         Vertex v;
-        v.x = vid % l.lx;
-        v.y = vid / l.lx;
+        Vid lxy = l.lx * l.ly;
+        v.z = vid / lxy;
+        Vid vxy = vid % lxy;
+        v.y = vxy / l.lx;
+        v.x = vxy % l.lx;
         return v;
       }
 
       static bool equal(const Vertex& v1, const Vertex& v2) {
-	return v1.x == v2.x && v1.y == v2.y;
+        return v1.x == v2.x && v1.y == v2.y && v1.z == v2.z;
       }
 
       static Vid center(const Lattice&) { return 0; }
