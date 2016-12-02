@@ -28,7 +28,7 @@ namespace lattices {
       typedef Vertex<Tag, VSize> Vertex;
       typedef VSize Vid;
 
-      static VSize count(const Lattice& l) { return l.lx * l.ly; }
+      static VSize count(const Lattice& l) { return l.lx * l.ly * l.lz; }
       static Vid vid(const Vertex& v, const Lattice& l) {
         return (v.z * l.ly + v.y) * l.lx + v.x;
       }
