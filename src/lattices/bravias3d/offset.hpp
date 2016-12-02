@@ -72,6 +72,18 @@ namespace lattices {
         return dv2;
       }
 
+      static void minus(Vertex& v, const Lattice& l) {
+        v.x = (l.lx - v.x) % l.lx;
+        v.y = (l.ly - v.y) % l.ly;
+        v.z = (l.lz - v.z) % l.lz;
+      }
+
+      static void minus(Vid& vid, const Lattice& l) {
+        Vertex v = LatticeCat::vertex(vid, l);
+        minus(v, l);
+        vid = LatticeCat::vid(v, l);
+      }
+
     };
   }
 }
