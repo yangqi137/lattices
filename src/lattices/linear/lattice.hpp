@@ -14,7 +14,7 @@ namespace lattices {
       typedef LatticeTag Tag;
 
       S x;
-    }
+    };
     template <typename S>
     struct LatticeCat {
       typedef LatticeTag Tag;
@@ -23,7 +23,7 @@ namespace lattices {
       typedef Lattice<S> Lattice;
       typedef Vertex<S> Vertex;
 
-      static VSize count(const Lattice& l) { return l; }
+      static VSize count(const Lattice& l) { return l.l; }
       static Vid vid(const Vertex& v, const Lattice& l) {
         return v.x;
       }
@@ -35,7 +35,7 @@ namespace lattices {
         return v1.x == v2.x;
       }
       static Vid center(const Lattice&) { return 0; }
-    }
+    };
   }
 }
 
