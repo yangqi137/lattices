@@ -1,12 +1,11 @@
-#ifndef LATTICES_SQUARE_NEAREST_NEIGHBOR_HPP
-#define LATTICES_SQUARE_NEAREST_NEIGHBOR_HPP
+#ifndef LATTICES_LINEAR_NEAREST_NEIGHBOR_HPP
+#define LATTICES_LINEAR_NEAREST_NEIGHBOR_HPP
 
 #include "lattice.hpp"
 #include "offset.hpp"
-#include <type_traits>
 
 namespace lattices {
-  namespace square {
+  namespace linear {
     template <typename S>
     struct NearestNeighborCat {
       typedef S VSize;
@@ -18,16 +17,20 @@ namespace lattices {
       typedef OffsetCat<VSize> OffsetCat;
       typedef typename OffsetCat::Offset Offset;
 
-      typedef std::integral_constant<unsigned char, 4>
+      typedef std::integral_constant<unsigned char, 2>
       coordinationNumber;
 
-      static const Offset neighborOffsets[] = {
-        {1, 0}, {0, 1}, {-1, 0}, {0, -1}
-      };
+      static constexpr Offset neighborOffsets(unsigned char i) {
+        if (i == 0)
+          return {1};
+        else
+          return {-1};
+      }
+
       static Vertex neighbor(const Vertex& v0, unsigned char i,
 			     const Lattice& lattice) {
 	      Vertex v1 = v0;
-	      OffsetCat::shift(v1, neighborOffsets[i], lattice);
+	      OffsetCat::shift(v1, neighborOffsets(i), lattice);
 	      return v1;
       }
 

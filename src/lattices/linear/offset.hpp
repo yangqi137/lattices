@@ -39,7 +39,7 @@ namespace lattices {
       }
 
       static void shift(Vertex& v, const Offset& dv, const Lattice& l) {
-	      offset_rewind(v.x, dv.dx, l.lx);
+	      offset_rewind(v.x, dv.dx, l.l);
       }
 
       static void shift(Vid& vid, Vid dvid, const Lattice& l) {
