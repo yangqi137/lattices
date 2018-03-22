@@ -2,7 +2,7 @@
 #define LATTICES_LINEAR_JSON_IO_HPP
 
 #include "lattice.hpp"
-#include <json.hpp>
+#include <nlohmann/json.hpp>
 
 namespace lattices {
   namespace linear {
