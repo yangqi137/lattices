@@ -5,16 +5,16 @@
 #include <initializer_list>
 #include <stdexcept>
 #include <cassert>
-
+#include <iostream>
 namespace lattices {
   namespace hypercubic {
     struct LatticeTag {};
     template <unsigned D, typename SIZE_TYPE>
-    struct HyperCubicLattice {
+    struct Lattice {
       typedef LatticeTag Tag;
       typedef std::integral_constant<unsigned, D> Dim;
 
-      HyperCubicLattice(std::initializer_list<SIZE_TYPE> lengths) {
+      Lattice(std::initializer_list<SIZE_TYPE> lengths) {
         if (lengths.size() != Dim::value)
           throw std::length_error("HyperCubicLattice constructor receives wrong number of lengths.");
 
@@ -25,6 +25,11 @@ namespace lattices {
           lcum_prev = lcum[i];
           i++;
         }
+      }
+
+      Lattice() {
+        for (unsigned i = 0; i < Dim::value; i++)
+          lcum[i] = 1;
       }
 
       SIZE_TYPE lcum[D];
@@ -39,7 +44,7 @@ namespace lattices {
       typedef std::integral_constant<unsigned, D> Dim;
 
       SIZE_TYPE x[D];
-    }
+    };
 
     template <unsigned D, typename SIZE_TYPE>
     struct LatticeCat {
@@ -67,7 +72,7 @@ namespace lattices {
       static Vid vid(const Vertex& v, const Lattice& l) {
         Vid vv = 0;
         for (unsigned i = Dim::value - 1; i != 0; i--)
-          vv += vx[i] * l.lcum[i-1];
+          vv += v.x[i] * l.lcum[i-1];
         vv += v.x[0];
         return vv;
       }
@@ -76,6 +81,23 @@ namespace lattices {
         assert( i < Dim::value);
         if (i == 0) return l.lcum[i];
         else return l.lcum[i] / l.lcum[i-1];
+      }
+
+      template <typename InputIterator>
+      static Lattice createLattice(InputIterator first, InputIterator last) {
+        Lattice lattice;
+        SIZE_TYPE lcum_prev = 1;
+        unsigned i = 0;
+        for (auto p = first; p != last; p++) {
+          if (i >= Dim::value) throw std::length_error("HyperCubicLattice constructor receives wrong number of lengths.");
+          unsigned li = *p;
+          std::cout << li << std::endl;
+          lattice.lcum[i] = lcum_prev * li;
+          lcum_prev = lattice.lcum[i];
+          i++;
+        }
+        if (i != Dim::value) throw std::length_error("HyperCubicLattice constructor receives wrong number of lengths.");
+        return lattice;
       }
     };
   }
