@@ -7,11 +7,11 @@
 namespace lattices {
   namespace kagome {
     template <typename S>
-    using nonbravias::Lattice<LatticeTag, S> Lattice;
+    using  Lattice = nonbravias::Lattice<LatticeTag, S>;
     template <typename S>
-    using nonbravias::Vertex<LatticeTag, S> Vertex;
+    using  Vertex = nonbravias::Vertex<LatticeTag, S>;
     template <typename S>
-    using nonbravias::LatticeCat<LatticeTag, S, 3> LatticeCat;
+    using  LatticeCat = nonbravias::LatticeCat<LatticeTag, S, 3>;
   }
 }
 
