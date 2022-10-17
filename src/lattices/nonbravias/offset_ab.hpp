@@ -8,6 +8,13 @@
 #include <vector>
 
 namespace lattices { namespace nonbravias {
+  template <typename TAG, typename SIZE_TYPE>
+  struct OffsetAB {
+    typename std::make_signed<SIZE_TYPE>::type dx;
+    typename std::make_signed<SIZE_TYPE>::type dy;
+    unsigned char a;
+    unsigned char b;
+  };
   template <typename TAG, typename SIZE_TYPE, unsigned char SUBLATTICE_SIZE>
   struct OffsetABCat {
     typedef TAG Tag;
@@ -17,7 +24,9 @@ namespace lattices { namespace nonbravias {
     typedef typename LatticeCat::Lattice Lattice;
     typedef typename LatticeCat::Vertex Vertex;
 
-      typedef typename std::make_signed<Vid>::type OffsetType;
+    typedef typename std::make_signed<Vid>::type OffsetType;
+    typedef OffsetAB<Tag, VSize> Offset;
+
       static void offset_rewind(Vid& x, OffsetType dx, Vid l) {
       	assert(dx > -((OffsetType)l));
 	      if (dx < 0)
@@ -25,13 +34,6 @@ namespace lattices { namespace nonbravias {
 	      x += dx;
 	      x %= l;
       }
-
-      struct Offset {
-	      OffsetType dx;
-	      OffsetType dy;
-        unsigned char a;
-        unsigned char b;
-      };
 
       static bool try_shift(Vertex& v, const Offset& dv, const Lattice& l) {
         if (v.n != dv.a) return false;
