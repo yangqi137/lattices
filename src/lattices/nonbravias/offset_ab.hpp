@@ -65,12 +65,21 @@ namespace lattices { namespace nonbravias {
         std::vector<Offset> result;
         const unsigned char ns = SUBLATTICE_SIZE;
         result.reserve(l.lx * l.ly * ns * ns);
-        for (OffsetType x = 0; x < l.lx; x++)
-          for (OffsetType y = 0; y < l.ly; y++)
+        for (OffsetType y = 0; y < l.ly; y++)
+          for (OffsetType x = 0; x < l.lx; x++)
             for (unsigned char a = 0; a < ns; a++)
               for (unsigned char b = 0; b < ns; b++)
                 result.push_back(Offset{x, y, a, b});
         return result;
+      }
+
+      static Vid dv2id(Offset dv, const Lattice& l) {
+        const unsigned char ns = SUBLATTICE_SIZE;
+        if (dv.dx < 0) dv.dx += l.lx;
+        if (dv.dy < 0) dv.dy += l.ly;
+        assert(dv.dx >= 0 && dv.dx < l.lx);
+        assert(dv.dy >= 0 && dv.dy < l.ly);
+        return ((dv.dy * l.lx + dv.dx) * ns + dv.a) * ns + dv.b;
       }
 
   };
