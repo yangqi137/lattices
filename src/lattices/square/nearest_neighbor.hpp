@@ -21,11 +21,11 @@ namespace lattices {
       typedef std::integral_constant<unsigned char, 4>
       coordinationNumber;
 
-      static const Offset neighborOffsets[] = {
-        {1, 0}, {0, 1}, {-1, 0}, {0, -1}
-      };
       static Vertex neighbor(const Vertex& v0, unsigned char i,
 			     const Lattice& lattice) {
+        static const Offset neighborOffsets[] = {
+          {1, 0}, {0, 1}, {-1, 0}, {0, -1}
+        };
 	      Vertex v1 = v0;
 	      OffsetCat::shift(v1, neighborOffsets[i], lattice);
 	      return v1;
