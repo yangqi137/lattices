@@ -8,6 +8,7 @@
 
 namespace lattices {
   namespace square {
+		struct SquareNNBondLatticeTag {};
     template <typename S>
     struct BondMapCat {
       typedef LatticeCat<S> LatticeCat;
@@ -15,8 +16,7 @@ namespace lattices {
       typedef typename LatticeCat::Vertex Vertex;
       typedef typename LatticeCat::Vid Vid;
 			
-			struct NNBondLatticeTag {};
-      typedef nonbravias::LatticeCat<NNBondLatticeTag, S, 2> BLatticeCat;
+      typedef nonbravias::LatticeCat<SquareNNBondLatticeTag, S, 2> BondLatticeCat;
       
 			typedef typename BondLatticeCat::Lattice BondLattice;
       typedef typename BondLatticeCat::Vertex BondVertex;
